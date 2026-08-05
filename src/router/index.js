@@ -124,6 +124,13 @@ const routes = [
     props: true,
     meta: { contexto: 'funcionario', exigeAutenticacao: true, exigeSenhaDefinitiva: true },
   },
+  {
+    path: '/:empresa/ponto',
+    name: 'ponto',
+    component: () => import('@/views/PontoView.vue'),
+    props: true,
+    meta: { contexto: 'funcionario', exigeAutenticacao: true, exigeSenhaDefinitiva: true },
+  },
 
   {
     path: '/:pathMatch(.*)*',

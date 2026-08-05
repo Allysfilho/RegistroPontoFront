@@ -126,6 +126,14 @@ body {
   cursor: progress;
 }
 
+/* O botão também é usado como link (RouterLink / <a>). */
+a.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .botao--secundario {
   background: transparent;
   color: var(--cor-texto-suave);

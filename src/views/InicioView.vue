@@ -49,9 +49,12 @@ async function sair() {
           <div><dt>Empresa</dt><dd>{{ dados.empresa.nome }}</dd></div>
         </dl>
 
-        <p class="campo__ajuda">
-          A tela de bater ponto entra na próxima fase.
-        </p>
+        <RouterLink
+          class="botao"
+          :to="{ name: 'ponto', params: { empresa } }"
+        >
+          Bater ponto
+        </RouterLink>
       </template>
 
       <button class="botao botao--secundario sair" type="button" @click="sair">
