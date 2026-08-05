@@ -1,0 +1,148 @@
+/*
+ * Base do app do funcionário. Prioriza celular: fontes que não exigem download,
+ * alvos de toque grandes e layout de coluna única que cresce em telas maiores.
+ */
+:root {
+  --cor-fundo: #f8fafc;
+  --cor-superficie: #ffffff;
+  --cor-texto: #0f172a;
+  --cor-texto-suave: #64748b;
+  --cor-borda: #e2e8f0;
+  --cor-primaria: #1d4ed8;
+  --cor-erro: #b91c1c;
+  --cor-erro-fundo: #fef2f2;
+  --cor-aviso: #7c2d12;
+  --cor-aviso-fundo: #ffedd5;
+  --cor-aviso-borda: #fdba74;
+
+  color-scheme: light dark;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cor-fundo: #0f172a;
+    --cor-superficie: #1e293b;
+    --cor-texto: #f1f5f9;
+    --cor-texto-suave: #94a3b8;
+    --cor-borda: #334155;
+    --cor-primaria: #3b82f6;
+    --cor-erro: #fca5a5;
+    --cor-erro-fundo: #450a0a;
+    --cor-aviso: #fed7aa;
+    --cor-aviso-fundo: #431407;
+    --cor-aviso-borda: #9a3412;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+/* ---------- Blocos reaproveitados pelas telas ---------- */
+
+.pagina {
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.pagina--larga {
+  max-width: 40rem;
+}
+
+.cartao {
+  border: 1px solid var(--cor-borda);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  background: var(--cor-superficie);
+}
+
+.campo {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.campo__rotulo {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.campo__entrada {
+  width: 100%;
+  /* 16px evita o zoom automático do iOS ao focar o campo. */
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 0.5rem;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+.campo__entrada:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 1px;
+}
+
+.campo__ajuda {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--cor-texto-suave);
+}
+
+.botao {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--cor-primaria);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.botao--secundario {
+  background: transparent;
+  color: var(--cor-texto-suave);
+  border: 1px solid var(--cor-borda);
+  font-weight: 500;
+}
+
+.alerta {
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.alerta--erro {
+  color: var(--cor-erro);
+  background: var(--cor-erro-fundo);
+}
+
+.alerta--aviso {
+  color: var(--cor-aviso);
+  background: var(--cor-aviso-fundo);
+  border: 1px solid var(--cor-aviso-borda);
+}
