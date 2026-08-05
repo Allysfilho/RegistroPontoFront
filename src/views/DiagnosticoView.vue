@@ -63,13 +63,14 @@ onMounted(consultar)
     </section>
 
     <section class="cartao atalhos">
-      <h2>Entrar como funcionário</h2>
+      <h2>Atalhos</h2>
       <p class="campo__ajuda">
         Cada empresa tem o próprio endereço, resolvido pelo slug na URL.
       </p>
       <ul class="atalhos__lista">
-        <li><RouterLink to="/empresa-a/entrar">/empresa-a/entrar</RouterLink></li>
-        <li><RouterLink to="/empresa-b/entrar">/empresa-b/entrar</RouterLink></li>
+        <li><RouterLink to="/central/entrar">/central/entrar</RouterLink> — painel do SaaS</li>
+        <li><RouterLink to="/empresa-a/admin/entrar">/empresa-a/admin/entrar</RouterLink> — painel da empresa</li>
+        <li><RouterLink to="/empresa-a/entrar">/empresa-a/entrar</RouterLink> — app do funcionário</li>
       </ul>
     </section>
   </main>

@@ -1,50 +1,59 @@
 import axios from 'axios'
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+
 /**
- * Cliente HTTP único do app.
- *
- * A base vem do build (`VITE_API_BASE_URL`): em produção é relativa (`/api`),
- * porque o nginx que serve o SPA faz o proxy reverso para o backend.
+ * Cliente para chamadas públicas (health check, por exemplo).
  */
 const http = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: BASE_URL,
   headers: {
     Accept: 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
   },
 })
 
-// O token é injetado por callback em vez de lido direto do store: assim este
-// módulo não depende do Pinia e não cria import circular com o store de auth.
-let obterToken = () => null
-let aoPerderSessao = () => {}
+/**
+ * Cria um cliente autenticado próprio.
+ *
+ * Cada contexto (funcionário, administrador, superadmin) recebe a própria
+ * instância em vez de compartilharem um interceptor global: os três podem estar
+ * logados ao mesmo tempo no navegador, e um token só vale no contexto onde foi
+ * emitido — misturá-los daria 401 silencioso e difícil de rastrear.
+ */
+export function criarClienteAutenticado({ obterToken, aoPerderSessao }) {
+  const cliente = axios.create({
+    baseURL: BASE_URL,
+    headers: {
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+  })
 
-export function configurarAutenticacao({ token, onSessaoExpirada }) {
-  obterToken = token
-  aoPerderSessao = onSessaoExpirada
-}
+  cliente.interceptors.request.use((config) => {
+    const token = obterToken()
 
-http.interceptors.request.use((config) => {
-  const token = obterToken()
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-
-  return config
-})
-
-http.interceptors.response.use(
-  (resposta) => resposta,
-  (erro) => {
-    // 401 aqui é token expirado ou revogado (a troca de senha revoga todos).
-    if (erro.response?.status === 401) {
-      aoPerderSessao()
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
     }
 
-    return Promise.reject(erro)
-  },
-)
+    return config
+  })
+
+  cliente.interceptors.response.use(
+    (resposta) => resposta,
+    (erro) => {
+      // 401 aqui é token expirado ou revogado (trocar a senha revoga todos).
+      if (erro.response?.status === 401) {
+        aoPerderSessao?.()
+      }
+
+      return Promise.reject(erro)
+    },
+  )
+
+  return cliente
+}
 
 /**
  * Extrai a mensagem de erro mais útil de uma resposta do Laravel.
@@ -61,6 +70,17 @@ export function mensagemDeErro(erro, padrao = 'Não foi possível concluir a ope
   }
 
   return dados?.message || erro.message || padrao
+}
+
+/**
+ * Erros de validação por campo, para destacar as entradas com problema.
+ */
+export function errosPorCampo(erro) {
+  const errors = erro.response?.data?.errors ?? {}
+
+  return Object.fromEntries(
+    Object.entries(errors).map(([campo, mensagens]) => [campo, mensagens[0]]),
+  )
 }
 
 export default http

@@ -1,15 +1,15 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import http, { mensagemDeErro } from '@/services/http'
+import { useFuncionarioStore } from '@/stores/auth'
+import { mensagemDeErro } from '@/services/http'
 
 const props = defineProps({
   empresa: { type: String, required: true },
 })
 
 const router = useRouter()
-const auth = useAuthStore()
+const store = useFuncionarioStore()
 
 const carregando = ref(true)
 const erro = ref(null)
@@ -17,7 +17,7 @@ const dados = ref(null)
 
 onMounted(async () => {
   try {
-    const resposta = await http.get(`/${props.empresa}/inicio`)
+    const resposta = await store.api.get(`/${props.empresa}/inicio`)
     dados.value = resposta.data
   } catch (e) {
     erro.value = mensagemDeErro(e, 'Não foi possível carregar seus dados.')
@@ -27,7 +27,7 @@ onMounted(async () => {
 })
 
 async function sair() {
-  await auth.sair()
+  await store.sair()
   router.push({ name: 'entrar', params: { empresa: props.empresa } })
 }
 </script>
@@ -35,8 +35,8 @@ async function sair() {
 <template>
   <main class="pagina">
     <header class="cabecalho">
-      <h1>Olá, {{ auth.funcionario?.nome }}</h1>
-      <p class="subtitulo">{{ auth.empresa?.nome }}</p>
+      <h1>Olá, {{ store.usuario?.nome }}</h1>
+      <p class="subtitulo">{{ store.usuario?.empresa?.nome }}</p>
     </header>
 
     <section class="cartao">

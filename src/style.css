@@ -11,6 +11,8 @@
   --cor-primaria: #1d4ed8;
   --cor-erro: #b91c1c;
   --cor-erro-fundo: #fef2f2;
+  --cor-sucesso: #15803d;
+  --cor-sucesso-fundo: #dcfce7;
   --cor-aviso: #7c2d12;
   --cor-aviso-fundo: #ffedd5;
   --cor-aviso-borda: #fdba74;
@@ -33,6 +35,8 @@
     --cor-primaria: #3b82f6;
     --cor-erro: #fca5a5;
     --cor-erro-fundo: #450a0a;
+    --cor-sucesso: #86efac;
+    --cor-sucesso-fundo: #052e16;
     --cor-aviso: #fed7aa;
     --cor-aviso-fundo: #431407;
     --cor-aviso-borda: #9a3412;
@@ -129,6 +133,66 @@ body {
   font-weight: 500;
 }
 
+.botao--perigo {
+  background: transparent;
+  color: var(--cor-erro);
+  border: 1px solid var(--cor-erro);
+  font-weight: 500;
+}
+
+/* Ações dentro de listas e cabeçalhos: largura pelo conteúdo, não 100%. */
+.botao--compacto {
+  width: auto;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.875rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.etiqueta {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  color: var(--cor-aviso);
+  background: var(--cor-aviso-fundo);
+  border: 1px solid var(--cor-aviso-borda);
+}
+
+.etiqueta--inativo {
+  color: var(--cor-erro);
+  background: var(--cor-erro-fundo);
+  border-color: var(--cor-erro);
+}
+
+select.campo__entrada {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--cor-texto-suave) 50%),
+    linear-gradient(135deg, var(--cor-texto-suave) 50%, transparent 50%);
+  background-position: right 1.1rem center, right 0.75rem center;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  padding-right: 2.25rem;
+}
+
+.campo--linha {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.campo--linha input[type='checkbox'] {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.campo--linha .campo__rotulo {
+  margin: 0;
+}
+
 .alerta {
   margin: 0 0 1rem;
   padding: 0.75rem;
@@ -145,4 +209,9 @@ body {
   color: var(--cor-aviso);
   background: var(--cor-aviso-fundo);
   border: 1px solid var(--cor-aviso-borda);
+}
+
+.alerta--sucesso {
+  color: var(--cor-sucesso);
+  background: var(--cor-sucesso-fundo);
 }

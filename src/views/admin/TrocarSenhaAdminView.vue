@@ -1,19 +1,19 @@
 <script setup>
 import TelaTrocarSenha from '@/components/TelaTrocarSenha.vue'
-import { useFuncionarioStore } from '@/stores/auth'
+import { useAdminStore } from '@/stores/auth'
 
 defineProps({
   empresa: { type: String, required: true },
 })
 
-const store = useFuncionarioStore()
+const store = useAdminStore()
 </script>
 
 <template>
   <TelaTrocarSenha
     :store="store"
     :contexto="empresa"
-    rota-painel="inicio"
-    rota-entrar="entrar"
+    rota-painel="admin.funcionarios"
+    rota-entrar="admin.entrar"
   />
 </template>
