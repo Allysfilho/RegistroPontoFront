@@ -49,12 +49,17 @@ async function sair() {
           <div><dt>Empresa</dt><dd>{{ dados.empresa.nome }}</dd></div>
         </dl>
 
-        <RouterLink
-          class="botao"
-          :to="{ name: 'ponto', params: { empresa } }"
-        >
-          Bater ponto
-        </RouterLink>
+        <div class="atalhos">
+          <RouterLink class="botao" :to="{ name: 'ponto', params: { empresa } }">
+            Bater ponto
+          </RouterLink>
+          <RouterLink class="botao botao--secundario" :to="{ name: 'registros', params: { empresa } }">
+            Meus registros
+          </RouterLink>
+          <RouterLink class="botao botao--secundario" :to="{ name: 'solicitacoes', params: { empresa } }">
+            Minhas solicitações
+          </RouterLink>
+        </div>
       </template>
 
       <button class="botao botao--secundario sair" type="button" @click="sair">
@@ -95,6 +100,11 @@ async function sair() {
 .meta dd {
   margin: 0;
   font-weight: 600;
+}
+
+.atalhos {
+  display: grid;
+  gap: 0.6rem;
 }
 
 .sair {
